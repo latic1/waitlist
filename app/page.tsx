@@ -1,23 +1,19 @@
 "use client";
-import HeaderComponent from "@/components/header";
-import { useState } from "react";
+
 import Snowfall from "react-snowfall";
 import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
-import { ArrowBigLeft, ListFilterPlus } from "lucide-react";
+import {  ListFilterPlus } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+
 
   const {
-    handleSubmit,
     control,
     formState: { errors, isSubmitting, isDirty, isValid },
-    reset,
+    // reset,
   } = useForm({
     defaultValues: { email: "" },
   });
@@ -35,12 +31,12 @@ export default function Home() {
   };
 
   // Form submission handler
-  const onSubmit = async (data: string) => {
-    console.log("Form submitted:", data);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    reset(); // Reset form after submission
-  };
+  // const onSubmit = async (data: string) => {
+  //   console.log("Form submitted:", data);
+  //   // Simulate API call
+  //   await new Promise((resolve) => setTimeout(resolve, 2000));
+  //   reset(); // Reset form after submission
+  // };
 
   // Mouse move handler for Image (optional)
   const handleMouseMove = () => {
@@ -162,8 +158,8 @@ export default function Home() {
                 <div
                   className="relative group"
                   key={testimonial.id}
-                  onMouseEnter={() => setHoveredIndex(null)}
-                  onMouseLeave={() => setHoveredIndex(null)}
+                  // onMouseEnter={() => setHoveredIndex(null)}
+                  // onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Link href={testimonial.href}>
                     <Image

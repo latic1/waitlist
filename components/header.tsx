@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 
-type Props = {};
+// type Props = {};
 
 const Icons = [
   { id: "twitter", name: <Twitter />, href: "https://x.com/latif1" },
@@ -18,7 +18,7 @@ const Icons = [
   { id: "github", name: <Github />, href: "https://github.com/latic1" },
 ];
 
-const HeaderComponent = (props: Props) => {
+const HeaderComponent = () => {
   const [checked, setChecked] = useState(false);
 
   return (
