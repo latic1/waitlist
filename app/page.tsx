@@ -1,101 +1,186 @@
+"use client";
+import HeaderComponent from "@/components/header";
+import { useState } from "react";
+import Snowfall from "react-snowfall";
+import { motion } from "framer-motion";
+import { useForm, Controller } from "react-hook-form";
+import { ArrowBigLeft, ListFilterPlus } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting, isDirty, isValid },
+    reset,
+  } = useForm({
+    defaultValues: { email: "" },
+  });
+
+  // Dummy data for testimonials (replace with real data)
+  const people = [
+    { id: 1, name: "John Doe", href: "/john", image: "/john.jpg" },
+    { id: 2, name: "Jane Smith", href: "/jane", image: "/jane.jpg" },
+  ];
+
+  // Email validation function
+  const validateEmail = (value: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
+  // Form submission handler
+  const onSubmit = async (data: string) => {
+    console.log("Form submitted:", data);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    reset(); // Reset form after submission
+  };
+
+  // Mouse move handler for Image (optional)
+  const handleMouseMove = () => {
+    // console.log("Mouse moved:", e.clientX, e.clientY);
+  };
+
+  return (
+    <div className="h-full w-full p-3 flex items-center justify-center relative z-50">
+      <Snowfall
+        color="gray"
+        snowflakeCount={200}
+        style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+          zIndex: -9,
+        }}
+      />
+
+      <div className="mt-5">
+        <div className="space-y-4">
+          <div className="space-y-2 text-center">
+            <div className="flex justify-center">
+              <Image
+                src="/file.png"
+                alt="Placeholder"
+                width={128}
+                height={128}
+                className="w-32 h-32"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <span>👋</span>
+              <div className="p-[1px] bg-transparent relative">
+                <div className="p-2">
+                  <span className="absolute inset-0 px-3 rounded-3xl overflow-hidden">
+                    <motion.span
+                      className="w-[500%] aspect-square absolute bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] opacity-50"
+                      initial={{ rotate: -90 }}
+                      animate={{ rotate: 90 }}
+                      transition={{
+                        duration: 3.8,
+                        ease: "linear",
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                      }}
+                      style={{
+                        translateX: "-50%",
+                        translateY: "-10%",
+                        zIndex: -1,
+                      }}
+                    />
+                  </span>
+                  <span className="bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-white dark:to-gray-500">
+                    Learn, Build, and Grow with Expert-Led Courses{" "}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-tr dark:from-white from-black to-neutral-600 dark:to-neutral-800 capitalize md:max-w-2xl lg:max-w-3xl mx-auto">
+              Get Early Access to the Ultimate Course Community!
+            </h1>
+            <p className="max-w-[600px] leading-7 text-center text-[16px] bg-clip-text text-transparent bg-gradient-to-tr dark:from-white from-black to-neutral-600 dark:to-neutral-700 mx-auto">
+              Unlock exclusive courses, actionable resources, and a thriving
+              community of creators. Join the waitlist now to be the first to
+              know when we launch!
+            </p>
+          </div>
+
+          <div className="w-full space-y-2">
+            <form
+              // onSubmit={}
+              className="flex flex-col lg:flex-row mx-auto lg:space-x-2 max-w-lg"
+            >
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="email"
+                    placeholder="Email"
+                    className={`flex-1 py-2.5 outline-none focus:border-2 focus:border-neutral-100 dark:border bg-opacity-20 shadow-md border border-neutral-400 dark:text-white dark:border-white/20 placeholder:text-neutral-500 pl-5 rounded-lg focus-within:border-none ${
+                      isDirty && !isValid
+                        ? "bg-[#f5a524]"
+                        : isDirty && isValid
+                        ? "bg-green-500"
+                        : ""
+                    }`}
+                  />
+                )}
+                rules={{
+                  required: "Email is required!",
+                  validate: (value) =>
+                    validateEmail(value) || "Invalid email format",
+                }}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
+              <button
+                disabled={isSubmitting}
+                className="flex items-center justify-center gap-x-3 bg-gradient-to-tr from-black from-50% via-black/40 to-gray-600/40 border-t-gray-700 disabled:cursor-not-allowed lg:w-36 shadow-md border border-b-0 border-r-0 border-l-0 bg-black mt-4 lg:mt-0 rounded-md px-2 py-2.5 w-full font-medium text-sm text-gray-200 dark:text-gray-500"
+                type="submit"
+              >
+                <ListFilterPlus className="text-[#383127]" />
+                {isSubmitting ? (
+                  "Loading..."
+                ) : (
+                  <span className="shrink-0">Reserve My Spot</span>
+                )}
+              </button>
+            </form>
+
+            {/* Testimonials Section */}
+            <div className="flex justify-center gap-4 mt-4">
+              {people.map((testimonial) => (
+                <div
+                  className="relative group"
+                  key={testimonial.id}
+                  onMouseEnter={() => setHoveredIndex(null)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <Link href={testimonial.href}>
+                    <Image
+                      onMouseMove={handleMouseMove}
+                      height={44}
+                      width={44}
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="object-cover hidden lg:block rounded-full h-11 w-11 group-hover:scale-105 group-hover:z-30 relative transition duration-500"
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
